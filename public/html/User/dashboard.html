@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/icons.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="dashboard"> <!-- Dashboard -->
+        <section class="navigation"> <!-- Navigation -->
+            <img src="/public/assets/logo/logo.jpg" alt="Local Desk Logo" class="logo">
+
+            <div>
+                <span class="material-symbols-outlined"> dashboard </span>
+                <span class="material-symbols-outlined"> add </span> 
+                <span class="material-symbols-outlined"> settings </span>
+            </div>
+
+            <img src="../../../public/assets/technician/georgy.jpg" alt="User Image" class="user">
+        </section><!-- Navigation End -->
+
+        <section class="main"><!-- Main -->
+            <div class="search"><!-- Search -->
+                <form action="">
+                    <input type="text" name="search" id="search"
+                    placeholder="Search Here">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </form>
+
+                <div class="notification">
+                    <span class="material-symbols-outlined">
+                        notifications
+                    </span>
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                </div>
+            </div><!-- Search End -->
+
+            <div class="title"> <!-- Title -->
+                <h1>Local Desk</h1>
+                <form action="#">
+                    <label for="status">Short By</label>
+                    <select name="status" id="status">
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </form>
+            </div>  <!-- Title End -->
+
+            <div class="tickets_list"><!-- Tickets List-->
+                <div class="ticket"> <!-- Ticket1 -->
+                    <div class="category category_color1"></div>
+                    <h2>Ejemplo 1</h2> 
+                    <p>1 hour ago</p>
+
+                    <ul class="activity">
+                        <li>Accion realizada 1</li>
+                        <li>Accion realizada 2</li>
+                    </ul>
+
+                    <div class="meta">
+                        <div class="technician">
+                            <img src="../../../public/assets/technician/georgy.jpg" alt="">
+                            <img src="../../../public/assets/technician/georgy2.jpg" alt="" class="stack">
+                            <img src="../../../public/assets/technician/georgy3.jpg" alt="" class="stack">
+                        </div>
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    
+                    </div>
+                </div><!-- Ticket1 End -->
+
+                <div class="ticket"> <!-- Ticket2 -->
+                    <div class="category category_color3"></div>
+                    <h2>Ejemplo 1</h2> 
+                    <p>Problema de ejemplo</p>
+
+                    <ul class="activity">
+                        <li>Accion realizada 1</li>
+                        <li>Accion realizada 2</li>
+                    </ul>
+
+                    <div class="meta">
+                        <div class="technician">
+                            <img src="../../../public/assets/technician/georgy.jpg" alt="">
+                            <img src="../../../public/assets/technician/georgy2.jpg" alt="" class="stack">
+                            <img src="../../../public/assets/technician/georgy3.jpg" alt="" class="stack">
+                        </div>
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    
+                    </div>
+                </div><!-- Ticket2 End -->
+
+                <div class="ticket"> <!-- Ticket3 -->
+                    <div class="category category_color4"></div>
+                    <h2>Ejemplo 1</h2> 
+                    <p>Problema de ejemplo</p>
+
+                    <ul class="activity">
+                        <li>Accion realizada 1</li>
+                        <li>Accion realizada 2</li>
+                    </ul>
+
+                    <div class="meta">
+                        <div class="technician">
+                            <img src="../../../public/assets/technician/georgy.jpg" alt="">
+                            <img src="../../../public/assets/technician/georgy2.jpg" alt="" class="stack">
+                            <img src="../../../public/assets/technician/georgy3.jpg" alt="" class="stack">
+                        </div>
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    
+                    </div>
+                </div><!-- Ticket3 End -->
+
+                <div class="ticket"> <!-- Ticket4 -->
+                    <div class="category category_color4"></div>
+                    <h2>Ejemplo 1</h2> 
+                    <p>Problema de ejemplo</p>
+
+                    <ul class="activity">
+                        <li>Accion realizada 1</li>
+                        <li>Accion realizada 2</li>
+                    </ul>
+
+                    <div class="meta">
+                        <div class="technician">
+                            <img src="../../../public/assets/technician/georgy.jpg" alt="">
+                            <img src="../../../public/assets/technician/georgy2.jpg" alt="" class="stack">
+                            <img src="../../../public/assets/technician/georgy3.jpg" alt="" class="stack">
+                        </div>
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    
+                    </div>
+                </div><!-- Ticket4 End -->
+
+                <div class="ticket"> <!-- Ticket5 -->
+                    <div class="category category_color4"></div>
+                    <h2>Ejemplo 1</h2> 
+                    <p>Problema de ejemplo</p>
+
+                    <ul class="activity">
+                        <li>Accion realizada 1</li>
+                        <li>Accion realizada 2</li>
+                    </ul>
+
+                    <div class="meta">
+                        <div class="technician">
+                            <img src="../../../public/assets/technician/georgy.jpg" alt="">
+                            <img src="../../../public/assets/technician/georgy2.jpg" alt="" class="stack">
+                            <img src="../../../public/assets/technician/georgy3.jpg" alt="" class="stack">
+                        </div>
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    
+                    </div>
+                </div><!-- Ticket5 End -->
+
+                <div class="ticket"> <!-- Ticket6 -->
+                    <div class="category category_color4"></div>
+                    <h2>Ejemplo 1</h2> 
+                    <p>Problema de ejemplo</p>
+
+                    <ul class="activity">
+                        <li>Accion realizada 1</li>
+                        <li>Accion realizada 2</li>
+                    </ul>
+
+                    <div class="meta">
+                        <div class="technician">
+                            <img src="../../../public/assets/technician/georgy.jpg" alt="">
+                            <img src="../../../public/assets/technician/georgy2.jpg" alt="" class="stack">
+                            <img src="../../../public/assets/technician/georgy3.jpg" alt="" class="stack">
+                        </div>
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    
+                    </div>
+                </div><!-- Ticket6 End -->
+
+            </div> <!-- Tickets List End -->
+            
+        </section><!-- Main End -->
+
+        <section class="secondary"> <!-- Secondary -->
+            <div class="chart"> <!-- Chart -->
+                <h2>Total Tickets</h2>
+                <canvas id="myChart" width="400" height="400">
+                </canvas>
+
+                <div class="complete">
+                    <h3>3 completed</h3>
+                    <p>from 12 tickets</p>
+                </div>
+            </div>  <!-- Chart End -->
+
+            <div class="recent_tickets"> <!-- Recent Tickets -->
+
+                <div class="listing">
+                    <div class="title">
+                        <div class="category category_color1"></div>
+                            <h2>Layouting</h2>
+                            <p>by Technician 1</p>
+                        
+                    </div>
+                    <span class="material-symbols-outlined">
+                        more_vert
+                    </span>
+                </div>
+
+                <div class="listing">
+                    <div class="title">
+                        <div class="category category_color3"></div>
+                            <h2>Otro ejemplo</h2>
+                            <p>by Technician 1</p>
+                        
+                    </div>
+                    <span class="material-symbols-outlined">
+                        more_vert
+                    </span>
+                </div>
+
+                <div class="listing">
+                    <div class="title">
+                        <div class="category category_color2"></div>
+                            <h2>Ejemplo 3</h2>
+                            <p>by Technician 1</p>
+                        
+                    </div>
+                    <span class="material-symbols-outlined">
+                        more_vert
+                    </span>
+                </div>
+            </div>  <!-- Recent Tickets End -->
+
+        </section><!-- Navigation End -->
+
+    </div><!--Dashboard End-->
+    <script src="../../../public/js/chart.js"></script>
+</body>
+</html>

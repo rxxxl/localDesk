@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Excluir la carpeta 'documents' de la regla principal
+RewriteCond %{REQUEST_URI} !^/documents/
+
+# Redirigir todas las solicitudes que no estén en 'public' a index.php
+RewriteRule !^public/ index.php [L]
