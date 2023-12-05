@@ -1,0 +1,14 @@
+<!-- FILEPATH: /c:/xampp/htdocs/localDesk/public/html/User/login.html -->
+
+<form action="/auth/verifyUser" method="POST">
+  <p>{MESSAGE}</p>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required placeholder="email@dart.biz" /><br /><br />
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required placeholder="password" /><br /><br />
+
+  <input type="submit" value="Login" />
+</form>
+
+<a href="/auth/forgotPassword">Forgot password?</a>

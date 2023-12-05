@@ -2,21 +2,19 @@
 session_start();
 
 class Session{
-    public function createSession($login, $email, $id){
-        $_SESSION['login'] = $login;
+    public function createSession($login, $email){
+        $_SESSION['login'] = $login; //tipo de usuario que se ha logeado al sistema
         $_SESSION['email'] = $email;
-        $_SESSION['id'] = $id;
+        
         switch ($_SESSION['login']) {
-            case 'root':
-                header('Location: /root/home');
-                break;
-            case 'admin':
+            case '1':
                 header('Location: /admin/home');
                 break;
-            case 'assistant':
-                header('Location: /assistant/home');
+            default:
+                header('Location: /user/home');
                 break;  
         }
+        exit();
     }
 
     public function verifySession($rol){

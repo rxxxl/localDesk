@@ -1,0 +1,37 @@
+<h1>create user form </h1>
+<p>{MESSAGE}</p>
+<fieldset>
+    <legend>New User</legend>
+    <form action="/admin/saveuser" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="name.lastname@dart.biz">
+        <br><br>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required placeholder="Name">
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required placeholder="Password">
+        <br><br>
+
+        <label for="rol">Rol:</label>
+        <select name="rol" id="rol">
+            <option value="1">Admin</option>
+            <option value="2">User</option>
+        </select>
+        <br><br>
+
+        <label for="jobprofile">Job Profile:</label>
+        <input type="text" id="jobprofile" name="jobprofile" required placeholder="jobprofile">
+        </select>
+        <br><br>
+
+        <label for="area">Area:</label>
+        <input type="text" id="area" name="area" required placeholder="area">
+        <br><br>
+
+        <input type="submit" value="Submit">
+
+    </form>
+</fieldset>

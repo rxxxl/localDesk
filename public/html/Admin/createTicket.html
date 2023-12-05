@@ -1,0 +1,37 @@
+<!-- FILEPATH: /c:/xampp/htdocs/localDesk/public/html/Admin/createTicket.html -->
+<fieldset>
+    <legend>Create a new ticket</legend>
+    <form action="" method="post">
+        <div>
+            <div>
+                <label for="problem">Problem</label>
+                <div>
+                    <input type="text" id="problem" name="problem" placeholder="Describe the problem" required />
+                </div>
+            </div>
+            <div>
+                <label for="area">Area</label>
+                <div>
+                    <select name="area" id="area">
+                        <option value="1">Oficina</option>
+                        <option value="2">Almacen 1</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label for="priority">Priority</label>
+                <div>
+                    <select name="priority" id="priority">
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </div>
+        </div>
+    </form>
+</fieldset>
