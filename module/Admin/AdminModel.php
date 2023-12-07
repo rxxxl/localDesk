@@ -16,7 +16,7 @@ class AdminModel
 
         $db = new DB();
         $conn = $db->connection();
-        $sql = "INSERT INTO usuarios (email, name, password, jobprofile, area, rol) 
+        $sql = "INSERT INTO users (email, name, password, jobprofile, area, rol) 
             VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
@@ -38,7 +38,7 @@ class AdminModel
     {
         $db = new DB();
         $conn = $db->connection();
-        $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+        $sql = "SELECT COUNT(*) FROM users WHERE email = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $email);
