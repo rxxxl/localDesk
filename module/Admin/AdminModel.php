@@ -51,5 +51,52 @@ class AdminModel
         return $count > 0;
     }
 
+    public function getRoles()
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT * FROM roles";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+
+        return $result;
+    }
+
+    public function getAreas()
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT * FROM areas";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+
+        return $result;
+    }
+
+    public function getJobProfiles()
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT * FROM job_profiles";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+
+        return $result;
+    }
+
+   
+
 }
 ?>

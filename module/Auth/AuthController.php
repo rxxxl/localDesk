@@ -5,9 +5,12 @@ require_once "AuthModel.php";
 require_once "./core/HelpFunctions.php";
 require_once "./core/Session.php";
 
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+require "./vendor/autoload.php";
 
 class AuthController
 {
@@ -29,6 +32,9 @@ class AuthController
         }
         if (count($arguments) > 0 && $arguments[0] == "error_empty") {
             $message = "Empty fields";
+        }
+        if (count($arguments) > 0 && $arguments[0] == "password_updated") {
+            $message = "Password updated successfully";
         }
 
 
@@ -74,6 +80,12 @@ class AuthController
         if (count($arguments) > 0 && $arguments[0] == "error_email") {
             $message = "Email not found or invalid";
         }
+        if (count($arguments) > 0 && $arguments[0] == "success") {
+            $message = "Email sent";
+        }
+        if (count($arguments) > 0 && $arguments[0] == "error_token") {
+            $message = "Invalid token";
+        }
 
 
         $authView = new authView();
@@ -112,23 +124,24 @@ class AuthController
                     $mail->Port = 465; // Puerto TCP al que conectarse
 
                     // Configura los detalles del remitente y destinatario
-                    $mail->setFrom('localdesk@ddm1078.com.mx', 'Fixed Assets System');
+                    $mail->setFrom('localdesk@ddm1078.com.mx', 'Local Desk');
                     $mail->addAddress($email); // Agrega el destinatario del correo electrónico
 
                     // Contenido del correo electrónico
                     $mail->isHTML(true); // Establece el formato del correo electrónico a HTML
-                    $mail->Subject = 'prueba 1';
-                    $mail->Body = $token;
+                    $mail->Subject = 'Password reset request';
+                    $mail->Body = "Hi, click <a href='localdesk.local/auth/resetPasswordForm/$token'>here</a> to reset your password";
 
                     // Envía el correo electrónico
                     $mail->send();
 
                     // El correo electr ónico se envió correctamente
                     echo 'Message has been sent';
+
+                    header("Location: /auth/forgotPassword/success");
                 } catch (Exception $e) {
                     // Error al enviar el correo electrónico
                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-
                 }
             } else {
                 header("Location: /auth/forgotPassword/error_email");
@@ -138,6 +151,78 @@ class AuthController
 
         }
 
+    }
+
+    public function resetPasswordForm($arguments = array())
+    {
+        $message = "";
+        $token = $arguments[0];
+
+        if (count($arguments) > 0 && $arguments[0] == "error_token") {
+            $message = "Invalid token";
+        }
+        //if (count($arguments) > 0 && $arguments[1] == "error_passwords") {
+        //  $message = "Passwords do not match";
+        //}
+
+
+        //Verificar si el token existe en la base de datos
+        $authModel = new AuthModel();
+        $user = $authModel->getUserByToken($token);
+
+        if (!$user) {
+            header("Location: /auth/forgotPassword/error_token");
+            exit();
+        }
+
+
+        $authView = new authView();
+        $authView->resetPasswordForm($message, $user);
+    }
+
+    public function updatePassword()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            //recibimos el email 
+            $email = test_input(trim($_POST["email"]));
+            $token = test_input(trim($_POST["token"]));
+            $password = test_input($_POST["password"]);
+            $password2 = test_input($_POST["password_confirmation"]);
+
+            if (empty($email) || empty($token) || empty($password) || empty($password2)) {
+                echo "empty fields";
+                //
+                exit();
+            }
+
+            if ($password != $password2) {
+                header("Location: /auth/resetPasswordForm/" . $token . "/error_passwords");
+                exit();
+            }
+
+            //verify token
+            $authModel = new AuthModel();
+            $user = $authModel->getUserByToken($token);
+
+            if (!$user) {
+                header("Location: /auth/forgotPassword/error_token");
+                exit();
+            }
+
+            //encrypt password
+            $password = password_hash($password, PASSWORD_DEFAULT);
+
+            //update password in the database
+            $authModel->updatePassword($password, $email);
+
+            //if the password was updated, delete the token
+            $authModel->deleteToken($email);
+
+
+            //redirigir al login
+            header("Location: /auth/login/password_updated");
+            exit();
+        }
     }
 
 

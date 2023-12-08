@@ -21,7 +21,7 @@ class AdminController
     }
 
     public function createUser($arguments = array())
-    {
+    {   
 
         $message = "";
         switch (true) {
@@ -45,8 +45,13 @@ class AdminController
                 break;
         }
 
+        $adminModel = new AdminModel();
+        $roles = $adminModel->getRoles();
+        $areas = $adminModel->getAreas();
+        $jobProfiles = $adminModel->getJobProfiles();
+
         $adminView = new AdminView();
-        $adminView->createUser($message);
+        $adminView->createUser($message, $roles, $areas, $jobProfiles);
     }
 
     public function saveUser()
