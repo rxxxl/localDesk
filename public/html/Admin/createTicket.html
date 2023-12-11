@@ -1,22 +1,24 @@
 <!-- FILEPATH: /c:/xampp/htdocs/localDesk/public/html/Admin/createTicket.html -->
 <fieldset>
     <legend>Create a new ticket</legend>
-    <form action="" method="post">
+    <form id="ticketForm">
         <div>
             <div>
-                <label for="problem">Problem</label>
+                <label for="issue">Issue/Problem</label>
                 <div>
-                    <input type="text" id="problem" name="problem" placeholder="Describe the problem" required />
+                    <input type="text" id="issue" name="issue" placeholder="Describe the issue" required />
                 </div>
             </div>
             <div>
-                <label for="area">Area</label>
+                <label for="area">Area:</label>
                 <div>
                     <select name="area" id="area">
-                        <option value="1">Oficina</option>
-                        <option value="2">Almacen 1</option>
+                        <!--areas-->
+                        <option value="{id}">{area}</option>
+                        <!--areas-->
                     </select>
                 </div>
+
             </div>
             <div>
                 <label for="priority">Priority</label>
@@ -28,10 +30,20 @@
                     </select>
                 </div>
             </div>
-
             <div>
-                <input type="submit" class="btn btn-primary" value="Save" />
+                <label for="desireResolutionDate">Desire Resolution Date:</label>
+                <div>
+                    <input type="date" name="desireResolutionDate" id="desireResolutionDate">
+                </div>
             </div>
+            <div>
+                <label for="photo">Photo</label>
+                <div>
+                    <input id="dropzone-file" type="file" class="hidden" accept="image/*" capture="environment" onchange="previewImage(event)"/>
+                </div>
+            </div>
+        <input type="submit" class="btn btn-primary" value="Save"/>
         </div>
     </form>
 </fieldset>
+<script src="{js_file_ticket}"></script>

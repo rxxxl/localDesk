@@ -31,13 +31,23 @@ class AdminView
         $template = new Template($createUser);
         $createUser = $template->render($data);
 
-        
+
         echo $createUser;
     }
 
-    public function createTicket()
+    public function createTicket($areas)
     {
         $createTicket = file_get_contents("./public/html/Admin/createTicket.html");
+        $template = new Template($createTicket);
+
+        $data = array(
+            "js_file_ticket" => "/public/js/saveTicket.js"
+        );
+
+        $createTicket = $template->render_regex($areas, "areas");
+
+        $template = new Template($createTicket);
+        $createTicket = $template->render($data);
 
         echo $createTicket;
     }

@@ -96,6 +96,10 @@ class AdminModel
         return $result;
     }
 
+
+    public function saveTicket($issue, $area, $priority, $desireResolutionDate, $uploadedFilePath){
+
+    }
    
 
 }
