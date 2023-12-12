@@ -30,7 +30,7 @@ class Session
     public function destroySession()
     {
         session_destroy();
-        header('Location: /user/login');
+        header('Location: /auth/login');
         exit();
     }
 

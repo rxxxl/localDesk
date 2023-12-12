@@ -97,8 +97,64 @@ class AdminModel
     }
 
 
-    public function saveTicket($issue, $area, $priority, $desireResolutionDate, $uploadedFilePath){
+    public function saveTicket($issue, $area, $priority, $desireResolutionDate, $uploadedFilePath, $userId)
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "INSERT INTO tickets (issue, area, priority, desired_resolution_date, photo_route, created_by) 
+            VALUES (?, ?, ?, ?, ?, ?)";
 
+        try {
+            $conn->begin_transaction();
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssssss", $issue, $area, $priority, $desireResolutionDate, $uploadedFilePath, $userId);
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                // Commit la transacción si todo fue exitoso
+                $conn->commit();
+
+                $response = [
+                    'success' => true,
+                    'message' => 'Ticket saved successfully',
+                    'data' => [
+                        'userId' => $userId,
+                        'issue' => $issue,
+                        'area' => $area,
+                        'priority' => $priority,
+                        'desireResolutionDate' => $desireResolutionDate,
+                        'photo' => $uploadedFilePath
+                    ]
+                ];
+            } else {
+                throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
+            }
+        } catch (Exception $e) {
+            // Manejo de la excepción (puedes loguear el error, lanzar otra excepción, etc.)
+            $response = ['success' => false, 'message' => 'Error al guardar el ticket', 'error' => $e->getMessage()];
+            $conn->rollback(); // Rollback en caso de error
+        } finally {
+            $conn->close();
+        }
+
+        return $response;
+    }
+
+
+    public function getUserInfo($userId){
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT * FROM users WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+
+        return $result;
     }
    
 

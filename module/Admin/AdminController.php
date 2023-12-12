@@ -4,6 +4,9 @@ require_once "AdminModel.php";
 require_once "./core/HelpFunctions.php";
 require_once "./core/Session.php";
 
+
+require_once __DIR__ . '/../../module/Common/EmailSender.php';
+require "./vendor/autoload.php";
 class AdminController
 {
     function __construct($method, $arguments)
@@ -17,11 +20,13 @@ class AdminController
 
     public function home()
     {
-        echo "Home";
+        //print session variables
+        echo $_SESSION['id'];
+
     }
 
     public function createUser($arguments = array())
-    {   
+    {
 
         $message = "";
         switch (true) {
@@ -82,7 +87,7 @@ class AdminController
     }
 
     public function createTicket($arguments = array())
-    {   
+    {
 
         $adminModel = new AdminModel();
         $areas = $adminModel->getAreas();
@@ -95,6 +100,8 @@ class AdminController
 
     public function saveTicket()
     {
+        Session()->verifySession("1");
+
         // Asegúrate de que la solicitud sea una solicitud POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Verifica si se ha enviado un archivo
@@ -114,27 +121,39 @@ class AdminController
                     $priority = $_POST['priority'];
                     $desireResolutionDate = $_POST['desireResolutionDate'];
 
-                    
+                    //id del usuario logeado
+                    $userId = $_SESSION['id'];
 
                     // Aquí puedes realizar operaciones adicionales con los datos del formulario
                     // Por ejemplo, guardarlos en una base de datos
                     $adminModel = new AdminModel();
-                    $adminModel->saveTicket($issue, $area, $priority, $desireResolutionDate, $uploadedFilePath);
 
-                    // Puedes enviar una respuesta JSON de vuelta al cliente
-                    $response = [
-                        'success' => true,
-                        'message' => 'Ticket guardado exitosamente',
+                    $response = $adminModel->saveTicket($issue, $area, $priority, $desireResolutionDate, $uploadedFilePath, $userId);
+                    // Si el ticket se guardó exitosamente, envía un correo electrónico con la información del ticket
+                    if ($response['success']) {
+                        // Crear una instancia de la clase EmailSender
+                        $recipientEmail = 'diego.dominguez@dart.biz';
+                        $subject = 'New ticket';
+                        // Construir el cuerpo del correo electrónico con la información del ticket
+                        $body = "Nuevo ticket guardado:<br><br>
+                            Issue: $issue<br>
+                            Área: $area<br>
+                            Prioridad: $priority<br>
+                            Fecha de resolución deseada: $desireResolutionDate<br>
+                            Usuario: $userId<br>
+                            Phto: <img src='cid:img' alt='img'>
+                            ";
+                        $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $uploadedFilePath;
+                        $emailSent = EmailSender::sendEmail($recipientEmail, $subject, $body, null, $imagePath);
                         
-                        'data' => [
-                            'issue' => $issue,
-                            'area' => $area,
-                            'priority' => $priority,
-                            'desireResolutionDate' => $desireResolutionDate,
-                            'photo' => $uploadedFilePath // Envía la ruta del archivo en la respuesta
-                        ]
-                    ];
-                    echo json_encode($response);
+
+                        // Puedes enviar una respuesta JSON de vuelta al cliente
+                        echo json_encode(['success' => true, 'message' => 'Ticket saved successfully']);
+                    } else {
+                        // Puedes enviar una respuesta JSON de vuelta al cliente
+                        echo json_encode($response);
+                    }
+
                 } else {
                     // Error al mover el archivo
                     $response = ['success' => false, 'message' => 'Error al mover el archivo'];
@@ -151,6 +170,7 @@ class AdminController
             echo json_encode($response);
         }
     }
+
 
 
 

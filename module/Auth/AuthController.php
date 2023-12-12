@@ -5,11 +5,7 @@ require_once "AuthModel.php";
 require_once "./core/HelpFunctions.php";
 require_once "./core/Session.php";
 
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
+require_once __DIR__ . '/../../module/Common/EmailSender.php';
 require "./vendor/autoload.php";
 
 class AuthController
@@ -61,7 +57,7 @@ class AuthController
 
             if ($user && password_verify($password, $user['password'])) {
                 $session = new Session();
-                $session->createSession($user['rol'], $user['email']);
+                $session->createSession($user['rol'], $user['email'], $user['id']);
 
 
             } else {
@@ -109,39 +105,21 @@ class AuthController
 
                 $authModel->saveToken($token, $email);
 
-                //send email 
-                $mail = new PHPMailer(true);
+                // Envía el email utilizando la clase EmailSender
+                $recipientEmail = $email;
+                $subject = 'Password reset request';
+                $body = "Hi, click <a href='localdesk.local/auth/resetPasswordForm/$token'>here</a> to reset your password";
 
-                try {
-                    // Configura los ajustes del servidor SMTP
-                    $mail->SMTPDebug = 2; // Activa la salida de depuración detallada
-                    $mail->isSMTP(); // Envía utilizando SMTP
-                    $mail->Host = 'mail.ddm1078.com.mx'; // Servidor SMTP para enviar a través de
-                    $mail->SMTPAuth = true; // Habilita la autenticación SMTP
-                    $mail->Username = 'localdesk@ddm1078.com.mx'; // Nombre de usuario SMTP
-                    $mail->Password = 'Tolucacampeon.2023'; // Contraseña SMTP
-                    $mail->SMTPSecure = 'ssl'; // Habilita la encriptación implícita TLS
-                    $mail->Port = 465; // Puerto TCP al que conectarse
+                $emailSent = EmailSender::sendEmail($recipientEmail, $subject, $body);
 
-                    // Configura los detalles del remitente y destinatario
-                    $mail->setFrom('localdesk@ddm1078.com.mx', 'Local Desk');
-                    $mail->addAddress($email); // Agrega el destinatario del correo electrónico
-
-                    // Contenido del correo electrónico
-                    $mail->isHTML(true); // Establece el formato del correo electrónico a HTML
-                    $mail->Subject = 'Password reset request';
-                    $mail->Body = "Hi, click <a href='localdesk.local/auth/resetPasswordForm/$token'>here</a> to reset your password";
-
-                    // Envía el correo electrónico
-                    $mail->send();
-
-                    // El correo electr ónico se envió correctamente
-                    echo 'Message has been sent';
-
+                if ($emailSent) {
+                    // El correo electrónico se envió correctamente
                     header("Location: /auth/forgotPassword/success");
-                } catch (Exception $e) {
+                    exit();
+                } else {
                     // Error al enviar el correo electrónico
-                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    header("Location: /auth/forgotPassword/error_email");
+                    exit();
                 }
             } else {
                 header("Location: /auth/forgotPassword/error_email");
