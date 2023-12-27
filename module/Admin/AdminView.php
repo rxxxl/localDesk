@@ -5,8 +5,8 @@ class AdminView
     public function home()
     {
         $home = file_get_contents("./public/html/Admin/home.html");
-        $template = new Template($home);
-        $home = $template->render();
+
+      
         echo $home;
     }
 
@@ -51,5 +51,31 @@ class AdminView
 
         echo $createTicket;
     }
+
+    public function viewTickets($tickets)
+    {
+        $viewTickets = file_get_contents("./public/html/Admin/viewTickets.html");
+        $template = new Template($viewTickets);
+
+        $viewTickets = $template->render_regex($tickets, "tickets");
+
+        echo $viewTickets;
+    }
+
+    public function viewTicket($ticket)
+    {
+        $viewTicket = file_get_contents("./public/html/Admin/viewTicket.html");
+        $template = new Template($viewTicket);
+
+
+        $viewTicket = $template->render($ticket);
+
+        echo $viewTicket;
+    }
+
+    
+
+
+
 }
 ?>

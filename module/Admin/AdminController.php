@@ -20,8 +20,8 @@ class AdminController
 
     public function home()
     {
-        //print session variables
-        echo $_SESSION['id'];
+        $adminView = new AdminView();
+        $adminView->home();   
 
     }
 
@@ -137,7 +137,7 @@ class AdminController
                         // Construir el cuerpo del correo electrónico con la información del ticket
                         $body = "Nuevo ticket guardado:<br><br>
                             Issue: $issue<br>
-                            Área: $area<br>
+                            Area: $area<br>
                             Prioridad: $priority<br>
                             Fecha de resolución deseada: $desireResolutionDate<br>
                             Usuario: $userId<br>
@@ -145,7 +145,7 @@ class AdminController
                             ";
                         $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $uploadedFilePath;
                         $emailSent = EmailSender::sendEmail($recipientEmail, $subject, $body, null, $imagePath);
-                        
+
 
                         // Puedes enviar una respuesta JSON de vuelta al cliente
                         echo json_encode(['success' => true, 'message' => 'Ticket saved successfully']);
@@ -170,6 +170,49 @@ class AdminController
             echo json_encode($response);
         }
     }
+
+    public function showTickets()
+    {
+        $adminModel = new AdminModel();
+        $tickets = $adminModel->getTickets();
+
+      
+        //agregar mensajes por defecto para campos vacios
+        foreach ($tickets as &$ticket) {
+            $ticket['status'] = $ticket['status'] ?? 'Aún no se ha proporcionado una solución.';
+            $ticket['assigned_technician'] = $ticket['assigned_technician'] ?? 'Aún no hay una respuesta.';
+            $ticket['resolution_date'] = $ticket['resolution_date'] ?? 'Pendiente';
+            $ticket['resolution_time'] = $ticket['resolution_time'] ?? 'Pendiente';
+            $ticket['solution'] = $ticket['solution'] ?? 'Pendiente';
+            $ticket['response'] = $ticket['response'] ?? 'Pendiente';
+            $ticket['rating'] = $ticket['rating'] ?? 'Pendiente';
+           
+        }
+
+        $adminView = new AdminView();
+        $adminView->viewTickets($tickets);
+    }
+
+    public function showTicket($arguments = array())
+    {
+        $ticketId = $arguments[0];
+
+        $adminModel = new AdminModel();
+        $ticket = $adminModel->getTicketInfo($ticketId);
+
+        $ticket['status'] = $ticket['status'] ?? 'Aún no se ha proporcionado una solución.';
+        $ticket['assigned_technician'] = $ticket['assigned_technician'] ?? 'Aún no hay una respuesta.';
+        $ticket['resolution_date'] = $ticket['resolution_date'] ?? 'Pendiente';
+        $ticket['resolution_time'] = $ticket['resolution_time'] ?? 'Pendiente';
+        $ticket['solution'] = $ticket['solution'] ?? 'Pendiente';
+        $ticket['response'] = $ticket['response'] ?? 'Pendiente';
+        $ticket['rating'] = $ticket['rating'] ?? 'Pendiente';
+
+        $adminView = new AdminView();
+        $adminView->viewTicket($ticket);
+    }
+
+    
 
 
 

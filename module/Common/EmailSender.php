@@ -31,7 +31,7 @@ class EmailSender
 
             $mail->isHTML(true); // Establece el formato del correo electrónico a HTML
             $mail->Subject = $subject;
-            $mail->Body = $body;
+            $mail->Body = utf8_decode($body);
 
             // Adjuntar archivo (si se proporciona)
             if ($attachmentPath !== null) {

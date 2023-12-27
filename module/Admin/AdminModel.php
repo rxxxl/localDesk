@@ -48,6 +48,8 @@ class AdminModel
         $stmt->close();
         $conn->close();
 
+        $count = isset($count) ? $count : 0; // Initialize $count if it is not set
+
         return $count > 0;
     }
 
@@ -142,7 +144,8 @@ class AdminModel
     }
 
 
-    public function getUserInfo($userId){
+    public function getUserInfo($userId)
+    {
         $db = new DB();
         $conn = $db->connection();
         $sql = "SELECT * FROM users WHERE id = ?";
@@ -156,7 +159,92 @@ class AdminModel
 
         return $result;
     }
-   
+
+    public function getTickets()
+    {
+        $db = new DB();
+        $conn = $db->connection();
+                    $sql = "SELECT tickets.id,
+                areas.area AS area,
+                tickets.priority,
+                tickets.issue,
+                tickets.desired_resolution_date,
+                tickets.creation_date,
+                tickets.status,
+                users_created.name AS created_by,
+                users_assigned.name AS assigned_technician,
+                tickets.resolution_date,
+                tickets.resolution_time,
+                tickets.solution,
+                tickets.response,
+                tickets.rating,
+                tickets.photo_route
+            FROM tickets
+            JOIN areas ON tickets.area = areas.id
+            JOIN users AS users_created ON tickets.created_by = users_created.id
+            LEFT JOIN users AS users_assigned ON tickets.assigned_technician = users_assigned.id;
+            ";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $tickets = array();
+        while ($row = $result->fetch_assoc()) {
+            $tickets[] = $row;
+        }
+
+
+        $stmt->close();
+        $conn->close();
+
+        return $tickets;
+    }
+
+
+    //funcion para obtener todos los datos de un ticket seleccionado 
+    public function getTicketInfo($ticketId)
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT tickets.id,
+                areas.area AS area,
+                tickets.priority,
+                tickets.issue,
+                tickets.desired_resolution_date,
+                tickets.creation_date,
+                tickets.status,
+                users_created.name AS created_by,
+                users_assigned.name AS assigned_technician,
+                tickets.resolution_date,
+                tickets.resolution_time,
+                tickets.solution,
+                tickets.response,
+                tickets.rating,
+                tickets.photo_route
+            FROM tickets
+            JOIN areas ON tickets.area = areas.id
+            JOIN users AS users_created ON tickets.created_by = users_created.id
+            LEFT JOIN users AS users_assigned ON tickets.assigned_technician = users_assigned.id
+            WHERE tickets.id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $ticketId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $ticket = array();
+        if ($result->num_rows > 0) {
+            $ticket = $result->fetch_assoc();
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $ticket;
+    }
+
+
 
 }
 ?>
