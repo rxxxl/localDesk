@@ -21,7 +21,7 @@ class AdminController
     public function home()
     {
         $adminView = new AdminView();
-        $adminView->home();   
+        $adminView->home();
 
     }
 
@@ -82,7 +82,7 @@ class AdminController
             exit();
         } else {
             $adminView = new AdminView();
-            $adminView->createUser();
+            $adminView->createUser([], [], [], []);
         }
     }
 
@@ -133,6 +133,8 @@ class AdminController
                     if ($response['success']) {
                         // Crear una instancia de la clase EmailSender
                         $recipientEmail = 'diego.dominguez@dart.biz';
+                        //copia a 
+                        
                         $subject = 'New ticket';
                         // Construir el cuerpo del correo electrónico con la información del ticket
                         $body = "Nuevo ticket guardado:<br><br>
@@ -141,7 +143,7 @@ class AdminController
                             Prioridad: $priority<br>
                             Fecha de resolución deseada: $desireResolutionDate<br>
                             Usuario: $userId<br>
-                            Phto: <img src='cid:img' alt='img'>
+                            Photo: <img src='cid:img'>
                             ";
                         $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $uploadedFilePath;
                         $emailSent = EmailSender::sendEmail($recipientEmail, $subject, $body, null, $imagePath);
@@ -176,7 +178,7 @@ class AdminController
         $adminModel = new AdminModel();
         $tickets = $adminModel->getTickets();
 
-      
+
         //agregar mensajes por defecto para campos vacios
         foreach ($tickets as &$ticket) {
             $ticket['status'] = $ticket['status'] ?? 'Aún no se ha proporcionado una solución.';
@@ -186,7 +188,7 @@ class AdminController
             $ticket['solution'] = $ticket['solution'] ?? 'Pendiente';
             $ticket['response'] = $ticket['response'] ?? 'Pendiente';
             $ticket['rating'] = $ticket['rating'] ?? 'Pendiente';
-           
+
         }
 
         $adminView = new AdminView();
@@ -200,21 +202,47 @@ class AdminController
         $adminModel = new AdminModel();
         $ticket = $adminModel->getTicketInfo($ticketId);
 
+        $technicians = $adminModel->getTechnicians();
+
+
+
         $ticket['status'] = $ticket['status'] ?? 'Aún no se ha proporcionado una solución.';
-        $ticket['assigned_technician'] = $ticket['assigned_technician'] ?? 'Aún no hay una respuesta.';
-        $ticket['resolution_date'] = $ticket['resolution_date'] ?? 'Pendiente';
+        $ticket['assigned_technician'] = $ticket['assigned_technician'] ?? 'Sin asignar';
+        $ticket['resolution_date'] = $ticket['resolution_date'] ?? 'Fecha de resolución deseada pendiente';
         $ticket['resolution_time'] = $ticket['resolution_time'] ?? 'Pendiente';
-        $ticket['solution'] = $ticket['solution'] ?? 'Pendiente';
-        $ticket['response'] = $ticket['response'] ?? 'Pendiente';
-        $ticket['rating'] = $ticket['rating'] ?? 'Pendiente';
+        $ticket['solution'] = $ticket['solution'] ?? 'Sin solucion por el momento';
+        $ticket['response'] = $ticket['response'] ?? 'Sin respuesta';
+        $ticket['rating'] = $ticket['rating'] ?? 'Sin calificar';
 
         $adminView = new AdminView();
-        $adminView->viewTicket($ticket);
+        $adminView->viewTicket($ticket, $technicians);
     }
 
-    
 
 
+    public function updateTicket(){
+        Session()->verifySession("1");
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $status = $_POST['status'];
+            $assigned_technician = $_POST['technician'];
+            $solution = $_POST['solution'];
+
+            $adminModel = new AdminModel();
+            $adminModel->updateTicket($id, $status, $assigned_technician, $solution);
+
+            //si la consulta se ejecuta con exito, enviar un correo al usuario
+            if ($adminModel) {
+                
+            }
+            //header("Location: /admin/showTicket/$id");
+            //exit();
+        } else {
+            header("Location: /admin/showTickets");
+            exit();
+        }
+    }
 
 
 

@@ -18,14 +18,14 @@ class EmailSender
             $mail->isSMTP(); // Envía utilizando SMTP
             $mail->Host = 'mail.ddm1078.com.mx'; // Servidor SMTP para enviar a través de
             $mail->SMTPAuth = true; // Habilita la autenticación SMTP
-            $mail->Username = 'localdesk@ddm1078.com.mx'; // Nombre de usuario SMTP
+            $mail->Username = 'support_locadesk@ddm1078.com.mx'; // Nombre de usuario SMTP
             $mail->Password = 'Tolucacampeon.2023'; // Contraseña SMTP
             $mail->SMTPSecure = 'ssl'; // Habilita la encriptación implícita TLS
             $mail->Port = 465; // Puerto TCP al que conectarse
             $mail->setLanguage('es'); // Establece el idioma de los mensajes de error
 
             // Configuración del mensaje
-            $mail->setFrom('localdesk@ddm1078.com.mx', 'Local Desk');
+            $mail->setFrom('support_locadesk@ddm1078.com.mx', 'Local Desk');
 
             $mail->addAddress($recipient);
 

@@ -62,12 +62,14 @@ class AdminView
         echo $viewTickets;
     }
 
-    public function viewTicket($ticket)
+    public function viewTicket($ticket, $technicians)
     {
         $viewTicket = file_get_contents("./public/html/Admin/viewTicket.html");
         $template = new Template($viewTicket);
 
-
+        $viewTicket = $template->render_regex($technicians, "technicians");
+        
+        $template = new Template($viewTicket);
         $viewTicket = $template->render($ticket);
 
         echo $viewTicket;

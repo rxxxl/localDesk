@@ -244,7 +244,47 @@ class AdminModel
         return $ticket;
     }
 
+    public function getTechnicians()
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT id, email, name FROM users WHERE rol = 1";
 
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $technicians = array();
+        while ($row = $result->fetch_assoc()) {
+            $technicians[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $technicians;
+    }
+
+   
+
+    public function updateTicket($id, $status, $assigned_technician, $solution)
+    {
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "UPDATE tickets SET status = ?, assigned_technician = ?, solution = ? WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $status, $assigned_technician, $solution, $id);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            header("Location: /admin/showTickets");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
 
 }
 ?>

@@ -5,6 +5,8 @@ require_once "AuthModel.php";
 require_once "./core/HelpFunctions.php";
 require_once "./core/Session.php";
 
+
+
 require_once __DIR__ . '/../../module/Common/EmailSender.php';
 require "./vendor/autoload.php";
 
@@ -22,6 +24,7 @@ class AuthController
 
     public function login($arguments = array())
     {
+
         $message = "";
         if (count($arguments) > 0 && $arguments[0] == "error") {
             $message = "Invalid credentials";
@@ -73,6 +76,9 @@ class AuthController
     public function forgotPassword($arguments = array())
     {
         $message = "";
+        if (count($arguments) > 0 && $arguments[0] == "errorToSendEmail") {
+            $message = "Error sending email";
+        }
         if (count($arguments) > 0 && $arguments[0] == "error_email") {
             $message = "Email not found or invalid";
         }
@@ -117,8 +123,10 @@ class AuthController
                     header("Location: /auth/forgotPassword/success");
                     exit();
                 } else {
+                    //print the error
+                    //echo $mail->ErrorInfo;
                     // Error al enviar el correo electrónico
-                    header("Location: /auth/forgotPassword/error_email");
+                    header("Location: /auth/forgotPassword/errorToSendEmail");
                     exit();
                 }
             } else {

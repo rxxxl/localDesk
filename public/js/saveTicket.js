@@ -25,7 +25,7 @@ document
     xhr.open("POST", "/admin/saveTicket", true);
 
     // Configura la función de devolución de llamada cuando la solicitud esté completa
-
+    
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Redirige a /admin/showtickets después de 3 segundos (ajusta según tu preferencia)
