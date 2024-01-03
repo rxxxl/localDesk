@@ -60,16 +60,21 @@
             </div>
         </div>
         <div>
-            <label for="created_by">created_by</label>
+            <label for="created_by">created by</label>
             <div>
                 <input type="text" id="created_by" name="created_by" value="{created_by}" required/>
             </div>
         </div>
         <div>
-            <label for="resolution_time">resolution_time</label>
+            <label for="resolution_date">resolution date</label>
             <div>
-                <input type="text" id="resolution_time" name="resolution_time" value="{resolution_time}" required/>
-            </div>
+            <input
+                type="datetime-local"
+                id="resolution-time"
+                name="resolution_date"
+                
+            />
+        </div>
         </div>
 
         <div>
@@ -85,7 +90,9 @@
                 <input type="text" value="{response}">
             </div>
         </div>
+
         
+
         <div>
             <label for="rating">Rating</label>
             <div>
@@ -108,3 +115,32 @@
     </div>
     
 </form>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtener el elemento input por su ID
+    var resolutionTimeInput = document.getElementById('resolution-time');
+
+    // Obtener la fecha y hora actual en la zona horaria local (Ciudad de México)
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = ('0' + (now.getMonth() + 1)).slice(-2); // Se suma 1 porque los meses comienzan desde 0
+    var day = ('0' + now.getDate()).slice(-2);
+    var hour = ('0' + now.getHours()).slice(-2);
+    var minute = ('0' + now.getMinutes()).slice(-2);
+
+    // Formar la cadena en el formato correcto
+    var currentDatetime = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+
+    // Establecer la hora actual como valor predeterminado
+    resolutionTimeInput.value = currentDatetime;
+
+    console.log("Fecha y hora actual en Ciudad de México:", now.toLocaleString('es-MX'));
+    console.log("Valor establecido en el campo:", resolutionTimeInput.value);
+});
+
+
+
+        
+</script>
