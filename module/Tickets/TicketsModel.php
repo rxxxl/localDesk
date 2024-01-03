@@ -3,7 +3,21 @@
 require_once('./core/DB.php');
 
 class TicketsModel{
+    
+    public function findTicket($id){
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "SELECT * FROM tickets WHERE id = ?";
 
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+
+        return $result;
+    }
     
     public function getRoles()
     {
@@ -231,13 +245,72 @@ class TicketsModel{
         if ($stmt->execute()) {
             $stmt->close();
             $conn->close();
-            header("Location: /admin/showTickets");
+            header("Location: /tickets/showTickets");
             exit();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
     }
 
+    public function processTicket($ticketId, $technician, $status){
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "UPDATE tickets SET status = ?, assigned_technician = ? WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss", $status, $technician, $ticketId);
+        
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            header("Location: /tickets/showTickets");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+    public function solvedTicket($ticketId, $technician, $status, $solution, $resolution_date){
+        $db = new DB();
+        $conn = $db->connection();
+        
+        $sql = "UPDATE tickets SET status = ?, assigned_technician = ?, solution = ?, resolution_date = ? WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssss", $status, $technician, $solution, $resolution_date, $ticketId);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            header("Location: /tickets/showTickets");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+
+    }
+
+    public function workingTicket($ticketId, $technician, $status){
+        $db = new DB();
+        $conn = $db->connection();
+        $sql = "UPDATE tickets SET status = ?, assigned_technician = ? WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss", $status, $technician, $ticketId);
+        
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            header("Location: /tickets/showTickets");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+    }
+
+    
 
 }
 ?>

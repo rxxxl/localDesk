@@ -22,7 +22,7 @@ document
 
     // Utiliza AJAX para enviar los datos al servidor
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin/saveTicket", true);
+    xhr.open("POST", "/tickets/saveTicket", true);
 
     // Configura la función de devolución de llamada cuando la solicitud esté completa
     
@@ -30,7 +30,7 @@ document
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Redirige a /admin/showtickets después de 3 segundos (ajusta según tu preferencia)
         setTimeout(function () {
-          window.location.href = "/admin/showtickets";
+          window.location.href = "/tickets/showtickets";
         }, 3000);
       }
     };

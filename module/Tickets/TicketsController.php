@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 require_once "TicketsView.php";
 require_once "TicketsModel.php";
@@ -9,7 +9,8 @@ require_once "./core/Session.php";
 
 require_once __DIR__ . '/../../module/Common/EmailSender.php';
 require "./vendor/autoload.php";
-class TicketsController{
+class TicketsController
+{
 
     function __construct($method, $arguments)
     {
@@ -145,6 +146,41 @@ class TicketsController{
 
         $ticketsView = new ticketsView();
         $ticketsView->viewTicket($ticket, $technicians);
+    }
+
+    public function updateTicket()
+    {
+
+        // Asegúrate de que la solicitud sea una solicitud POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ticketId = $_POST['id'];
+            $technician = $_POST['technician'];
+            $status = $_POST['status'];
+            $solution = $_POST['solution'];
+            $resolution_date = $_POST['resolution_date'];
+
+            $ticketsModel = new TicketsModel();
+            $ticket = $ticketsModel->findTicket($ticketId);
+
+            if (!$ticket) {
+                echo "Ticket not found";
+            } else {
+                switch ($status) {
+                    case 'process':
+                        $ticketsModel->processTicket($ticketId, $technician, $status);
+
+                        break;
+                    case 'solved':
+                        $ticketsModel->solvedTicket($ticketId, $technician, $status, $solution, $resolution_date);
+                        break;
+                    case 'working':
+                        $ticketsModel->workingTicket($ticketId, $technician, $status);
+                        break;
+                }
+            }
+        }
+
+
     }
 }
 

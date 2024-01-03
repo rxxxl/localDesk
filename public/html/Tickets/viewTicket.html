@@ -1,4 +1,4 @@
-<form action="/admin/updateTicket" method="post">
+<form action="/tickets/updateTicket" method="post">
 
     <div>
         <input type="hidden" name="id" value="{id}"/>
@@ -43,9 +43,10 @@
             <div>
                 <select name="status" id="status">
                     <option value="{status}">{status}</option>
-                    <option value="open">open</option>
-                    <option value="process">progress</option>
-                    <option value="solved">solved</option>
+                    <option value="open">Open</option>
+                    <option value="process">In process</option>
+                    <option value="working">Working</option>
+                    <option value="solved">Solved</option>
                 </select>
             </div>
         </div>
