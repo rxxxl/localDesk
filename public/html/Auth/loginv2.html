@@ -1,0 +1,42 @@
+
+        <div class="main container">
+            <div class="row">
+                <div class="col-md-6 side-image">
+                    <!----Image----->
+                    <img src="/public/images/login/felicilandia-alvaro-diaz-5.jpg" alt="">
+                    <div class="text">
+
+                    </div>
+                </div>
+                <div class="col-md-6 right">
+                    <div class="input-box">
+                        <header>{title}</header>
+                        <p>{MESSAGE}</p>
+                        <form action="/auth/verifyUser" method="post">
+
+
+                            <div class="input-field">
+                                <input type="email" class="input" id="email" name="email" required autocomplete="off" />
+                                <label for="email">Email</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input type="password" class="input" id="password" name="password" required />
+                                <label for="password">Password</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input type="submit" class="submit" value="Login" />
+                            </div>
+
+                            <div class="forgot">
+                                <span>Forgot password? <a href="/auth/forgotPassword">Click here</a> </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
