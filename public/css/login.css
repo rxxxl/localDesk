@@ -1,20 +1,20 @@
-*{
-    font-family: 'Roboto', sans-serif;
+* {
+    font-family: 'Poppins', sans-serif;
 }
 
-.wrapper{
+.wrapper {
     background: #F7F7F7;
     padding: 0 20px 20px;
 }
 
-.main{
+.main {
     display: flex;
     justify-content: center;
-    align-items: center ;
+    align-items: center;
     min-height: 100vh;
 }
 
-.row{
+.row {
     background: #ffff;
     width: 900px;
     height: 550px;
@@ -23,7 +23,7 @@
     border-radius: 20px;
 }
 
-.side-image{
+.side-image {
     background-image: url("../images/login/Ldf.png");
     background-position: center;
     background-size: cover;
@@ -33,93 +33,94 @@
 
 }
 
-img{
+img {
     width: 35px;
     position: absolute;
     top: 30px;
     left: 30px;
 }
 
-.text{
-    
+.text {
+
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
-.text p{
+.text p {
     color: #fff;
     font-size: 18px;
 }
 
-i{
+i {
     font-weight: 400;
     font-size: 15px;
 }
 
-.right{
+.right {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
-.input-box{
+.input-box {
     width: 330px;
     box-sizing: border-box;
 }
 
-.input-box header{
+.input-box header {
     font-weight: 700;
     font-size: 40px;
     text-align: center;
     margin-bottom: 45px;
 }
 
-.input-field{
+.input-field {
     display: flex;
     flex-direction: column;
     position: relative;
     padding: 0 10px 0 10px;
 }
 
-.input{
+.input {
     height: 45px;
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     outline: none;
     margin-bottom: 20px;
     color: #40414a;
 }
 
-.input-box .input-field label{
+.input-box .input-field label {
     position: absolute;
     top: 10px;
     left: 10px;
     pointer-events: none;
-    transition: 0.5s;  
+    transition: 0.5s;
 }
 
-.input-field .input:focus ~ label{
+.input-field .input:focus~label {
     top: -10px;
     font-size: 10px;
 }
 
-.input-field .input:valid ~ label{
+.input-field .input:valid~label {
     top: -10px;
     font-size: 13px;
     color: #0D0D0D;
 }
 
 
-.input-field .input:focus, .input-field .input:valid{
+.input-field .input:focus,
+.input-field .input:valid {
     border-bottom: 1px solid #2CBF60;
 }
 
-.submit{
+.submit {
     border: none;
     outline: none;
     height: 45px;
@@ -128,52 +129,53 @@ i{
     transition: .4s;
 }
 
-.submit:hover{
+.submit:hover {
     background: rgba(44, 191, 96, 0.9);
     color: #fff;
 }
 
-.forgot{
+.forgot {
     text-align: center;
     font-size: small;
     margin-top: 25px;
 }
 
-span a{
+span a {
     text-decoration: none;
     font-weight: 700;
     color: #21401C;
     transition: 0.2s;
 }
 
-span a:hover{
+span a:hover {
     text-decoration: underline;
     color: #2CBF60;
 }
 
-@media only screen and (max-width: 768px){
-    .side-image{
+@media only screen and (max-width: 768px) {
+    .side-image {
         border-radius: 10px 10px 0 0;
     }
 
-    img{
+    img {
         width: 35px;
         position: absolute;
         top: 20px;
         left: 47px;
     }
 
-    .text{
+    .text {
         position: absolute;
         top: 70%;
         text-align: center;
     }
 
-    .text p,i{
+    .text p,
+    i {
         font-size: 17px;
     }
 
-    .row{
+    .row {
         max-width: 420px;
         width: 100%;
     }

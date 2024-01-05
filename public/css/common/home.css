@@ -1,0 +1,56 @@
+html,
+body {
+    height: 100% ;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.mynav {
+    color: #fff;
+}
+
+.mynav li a {
+        transition: background-color 0.3s ease, color 0.3s ease;
+            /* Transición suave para el color de fondo y el texto */
+    color: #fff;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    padding: 8px 5px;
+}
+
+.mynav li a.active {
+    background: rgba(44, 191, 96, 0.9);
+}
+
+.mynav li a:hover {
+    background: rgba(44, 191, 96, 0.9);
+}
+
+.mynav li a i {
+    width: 25px;
+    text-align: center;
+        transition: color 0.3s ease;
+            /* Transición suave para el color del ícono */
+}
+
+/* Estilo para el badge de notificación */
+.mynav li a .notification-badge {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transición suave para el color de fondo y el texto del badge */
+}
+
+.mynav li a:hover .notification-badge {
+    background-color: #735CE0; /* Cambia el color del badge al pasar el puntero */
+    color: #fff; /* Cambia el color del texto del badge al pasar el puntero */
+}
+
+.notification-badge {
+    background-color: rgba(44, 191, 96, 0.9);
+    float: right;
+    color: #fff;
+    font-size: 14px;
+    padding: 0px 8px;
+    border-radius: 2px;
+}

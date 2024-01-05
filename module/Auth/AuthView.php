@@ -17,6 +17,7 @@ class AuthView
             "title" => "Login",
             "bootstrap" => "/public/bootstrap/css/bootstrap.min.css",
             "css_file" => "/public/css/login.css",
+            "font" => "/public/css/common/sf-pro-display.css",
             "js_file" => "/public/js/loginValidation.js"
         );
 
@@ -45,6 +46,7 @@ class AuthView
             "title" => "Login",
             "bootstrap" => "/public/bootstrap/css/bootstrap.min.css",
             "css_file" => "/public/css/login.css",
+            "font" => "/public/css/common/sf-pro-display.css",
             "js_file" => "/public/js/loginValidation.js"
         );
 
@@ -76,6 +78,7 @@ class AuthView
         $headData = array(
             "title" => "Login",
             "bootstrap" => "/public/bootstrap/css/bootstrap.min.css",
+            "font" => "/public/css/common/sf-pro-display.css",
             "css_file" => "/public/css/login.css"
         );
 
